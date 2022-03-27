@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPOrgParser", "SAPOrgParser\SAPOrgParser.csproj", "{FA410959-C4FD-4E36-82F5-759B47C82193}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "Application.UnitTests\Application.UnitTests.csproj", "{7798B3DC-B9F4-41F3-BB7C-F78F72AE8865}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA410959-C4FD-4E36-82F5-759B47C82193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA410959-C4FD-4E36-82F5-759B47C82193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA410959-C4FD-4E36-82F5-759B47C82193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA410959-C4FD-4E36-82F5-759B47C82193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7798B3DC-B9F4-41F3-BB7C-F78F72AE8865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7798B3DC-B9F4-41F3-BB7C-F78F72AE8865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7798B3DC-B9F4-41F3-BB7C-F78F72AE8865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7798B3DC-B9F4-41F3-BB7C-F78F72AE8865}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B3789282-EF57-447B-9C21-9B905233C5C2}
+	EndGlobalSection
+EndGlobal
