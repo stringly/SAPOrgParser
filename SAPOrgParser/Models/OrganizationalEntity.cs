@@ -7,17 +7,20 @@ namespace SAPOrgParser.Models
         /// <summary>
         /// Identifier
         /// </summary>
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// The name of the Component
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
         /// <summary>
         /// The internal Organization Id of the Component.
         /// </summary>
-        public string OrganizationId { get; private set; }
-        public int NestedLevel { get; private set;}
+        public string OrganizationId { get; set; }
+        public int NestedLevel { get; set;}
+        protected OrganizationalEntity()
+        {
 
+        }
         public OrganizationalEntity(Guid id, string name, string organizationId, int nestedLevel)
         {
             Id = id;

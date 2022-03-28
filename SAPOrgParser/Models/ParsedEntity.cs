@@ -15,23 +15,23 @@ namespace SAPOrgParser.Models
         /// <summary>
         /// The name of the entity.
         /// </summary>
-        public string Assignment { get; private set; }
+        public string Assignment { get; set; }
         /// <summary>
         /// The text contained in the "Code" field of the SAP flat file.
         /// </summary>
-        public string Code { get; private set; }
+        public string Code { get; set; }
         /// <summary>
         /// The Entity Type Code of the Entity.
         /// </summary>
-        public string EntityTypeCode { get; private set; }
+        public string EntityTypeCode { get; set; }
         /// <summary>
         /// The SAP ID of the entity.
         /// </summary>
-        public string ID { get; private set; }
+        public string ID { get; set; }
         /// <summary>
         /// An integer representinog the nesting level of the entity.
         /// </summary>
-        public int nestLevel { get; private set; }
+        public int nestLevel { get; set; }
         /// <summary>
         /// Creates a new instance of the class
         /// </summary>

@@ -16,11 +16,11 @@ namespace SAPOrgParser.Models
         /// <remarks>
         /// This will be null for the top-level component in the org.
         /// </remarks>
-        public Guid? ParentComponentId { get; private set; }
+        public Guid? ParentComponentId { get; set; }
 
-        public List<Component> ChildComponents { get; private set;}
-        public List<Position> Positions { get; private set;}
-
+        public List<Component> ChildComponents { get; set;}
+        public List<Position> Positions { get; set;}
+        private Component() : base() { }
         /// <summary>
         /// Creates a new instance of the Class.
         /// </summary>

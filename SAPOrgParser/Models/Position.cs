@@ -13,9 +13,9 @@ namespace SAPOrgParser.Models
         /// <remarks>
         /// All positions MUST have a parent component.
         /// </remarks>
-        public Guid ParentComponentId { get; private set; }
-        public Person PersonAssigned { get; private set;}
-
+        public Guid ParentComponentId { get; set; }
+        public Person PersonAssigned { get; set;}
+        private Position() : base() { }
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>

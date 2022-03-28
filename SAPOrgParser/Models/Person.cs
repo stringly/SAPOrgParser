@@ -4,6 +4,7 @@ namespace SAPOrgParser.Models
 {
     public class Person : OrganizationalEntity
     {
+        private Person(): base() { }
         /// <summary>
         /// Creates a new instance of the Class.
         /// </summary>

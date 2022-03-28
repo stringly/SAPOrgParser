@@ -16,27 +16,34 @@ namespace SAPOrgParser
         /// <summary>
         /// Returns the String Array of lines to be parsed as a Readonly Collection
         /// </summary>
-        public ICollection<string> Lines => _lines.ToList().AsReadOnly();
+        public List<string> Lines => _lines.ToList();
         private readonly List<ParsedEntity> _parsedEntities;
         /// <summary>
         /// Returns the collection of Parsed Entities as a readonly Collection.
         /// </summary>
-        public ICollection<ParsedEntity> ParsedEntities => _parsedEntities.AsReadOnly();
+        public List<ParsedEntity> ParsedEntities => _parsedEntities;
         private readonly List<OrganizationalEntity> _organizationalEntities;
         /// <summary>
         /// Returns the collection of Organizational Entities as a readonly Collection.
         /// </summary>
-        public ICollection<OrganizationalEntity> OrganizationalEntities => _organizationalEntities.AsReadOnly();
+        public List<OrganizationalEntity> OrganizationalEntities => _organizationalEntities;
         private List<Component> _nonNestedComponentList;
         /// <summary>
         /// Returns the list of Parsed Components prior to any attempt to establsh parent/child relationships.
         /// </summary>
-        public ICollection<Component> NonNestedComponentList => _nonNestedComponentList.AsReadOnly();
-        private List<Component> _nestedComponentFlatList;
+        public List<Component> NonNestedComponentList => _nonNestedComponentList;
+        private readonly List<SimpleComponent> _componentFlatList;
         /// <summary>
-        /// Returns a flat list of components with parent/child relationships.
+        /// Returns a flattened list of Components with their Parent Components, Positions, and Persons populated.
         /// </summary>
-        public ICollection<Component> NestedComponentFlatList => _nestedComponentFlatList.AsReadOnly(); 
+        /// <returns></returns>
+        public List<SimpleComponent> ComponentsFlatList => _componentFlatList;
+        private readonly List<SimplePosition> _positionsFlatList;
+        public List<SimplePosition> PositionsFlatList => _positionsFlatList;
+
+        private readonly List<SimplePerson> _personsFlatList;
+        public List<SimplePerson> PersonsFlatList => _personsFlatList;
+
         private Component _department;
         /// <summary>
         /// Returns the final, top-level component.
@@ -50,7 +57,10 @@ namespace SAPOrgParser
             _parsedEntities = new List<ParsedEntity>();
             _organizationalEntities = new List<OrganizationalEntity>();
             _nonNestedComponentList = new List<Component>();
-            _nestedComponentFlatList = new List<Component>();
+            _componentFlatList = new List<SimpleComponent>();
+            _positionsFlatList = new List<SimplePosition>();
+            _personsFlatList = new List<SimplePerson>();
+
         }
         /// <summary>
         /// Parses the string array.
@@ -146,8 +156,19 @@ namespace SAPOrgParser
             {
                 parent.AddChildComponent(current);
             }
+            // TODO: Each Component, Position, and Person needs to be in a flat list with Id/ParentId.
             // add the component, which should now have it's parentComponentId property set, to the flat file list.
-            _nestedComponentFlatList.Add(current);
+            _componentFlatList.Add(new SimpleComponent(current));
+            foreach(Position p in current.Positions)
+            {
+                _positionsFlatList.Add(new SimplePosition(p));
+                if(p.PersonAssigned != null)
+                {
+                    SimplePerson toAdd = new SimplePerson(p.PersonAssigned);
+                    toAdd.PositionId = p.Id;
+                    _personsFlatList.Add(toAdd);
+                }
+            }
         }
         public Component FindParent(int currentLevel, List<Component> workingList)
         {
