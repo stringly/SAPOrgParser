@@ -23,6 +23,10 @@ namespace SAPOrgParser.Models
         /// The Code for the Component.
         /// </summary>
         public string Code { get; set; }
+        /// <summary>
+        /// Integer used to set the order of the Component among it's parent's child components.
+        /// </summary>
+        public int LineupPosition { get; set; }
         public SimpleComponent() {}
         /// <summary>
         /// Creates a new instance of the class
@@ -31,12 +35,13 @@ namespace SAPOrgParser.Models
         /// <param name="name">The name of the Component</param>
         /// <param name="parentComponentId">The Id of the Component's parent Component.</param>
         /// <param name="code">The code for the Component.</param>
-        public SimpleComponent(Guid id, string name, Guid? parentComponentId, string code)
+        public SimpleComponent(Guid id, string name, Guid? parentComponentId, string code, int lineupPosition = 0)
         {
             id = Id;
             Name = name;
             ParentComponentId = parentComponentId;
             Code = code;
+            LineupPosition = lineupPosition;
         }
         /// <summary>
         /// Creates a new instance of the class.
@@ -48,6 +53,7 @@ namespace SAPOrgParser.Models
             Name = c.Name;
             ParentComponentId = c.ParentComponentId;
             Code = c.OrganizationId;
+            LineupPosition = c.LineupPosition;
         }
     }
 }

@@ -2,13 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 
 namespace SAPOrgParser
 {
     /// <summary>
-    /// Class that parses the string array into <see cref="Models.ParsedEntity"/> objects
+    /// Class that parses the string array into objects and collections.
     /// </summary>
     public class Parser
     {        
@@ -39,9 +37,15 @@ namespace SAPOrgParser
         /// <returns></returns>
         public List<SimpleComponent> ComponentsFlatList => _componentFlatList;
         private readonly List<SimplePosition> _positionsFlatList;
+        /// <summary>
+        /// Returns a flat list of <see cref="SimplePosition"/> objects.
+        /// </summary>
         public List<SimplePosition> PositionsFlatList => _positionsFlatList;
 
         private readonly List<SimplePerson> _personsFlatList;
+        /// <summary>
+        /// Returns a flat list of <see cref="SimplePerson"/> objects.
+        /// </summary>
         public List<SimplePerson> PersonsFlatList => _personsFlatList;
 
         private Component _department;
@@ -132,11 +136,14 @@ namespace SAPOrgParser
         private void MapParentAndChildComponents()
         {
             if (_nonNestedComponentList.Count == 0) { throw new InvalidOperationException("Map Parent/Child Components failed: There are no Non-Nested Components to output."); }
+            // we need a copy of the nonNested List, as the processing will transform the list as it works through it.
             List<Component> workingList = new List<Component>(_nonNestedComponentList);
-            while (workingList.Count > 1)
+            while (workingList.Count > 1) 
             {
+                // continue processing until the list is left with only 1 component, which should be the top-level master component with all children nested.
                 ProcessComponentList(workingList);
             }
+            // set the top level "Department" component to the single component left on the list.
             _department = workingList.FirstOrDefault();
         }
         /// <summary>
@@ -159,9 +166,11 @@ namespace SAPOrgParser
             // TODO: Each Component, Position, and Person needs to be in a flat list with Id/ParentId.
             // add the component, which should now have it's parentComponentId property set, to the flat file list.
             _componentFlatList.Add(new SimpleComponent(current));
+            int positionCounter = 0;
             foreach(Position p in current.Positions)
             {
-                _positionsFlatList.Add(new SimplePosition(p));
+                _positionsFlatList.Add(new SimplePosition(p, positionCounter));
+                positionCounter++;
                 if(p.PersonAssigned != null)
                 {
                     SimplePerson toAdd = new SimplePerson(p.PersonAssigned);
@@ -170,8 +179,10 @@ namespace SAPOrgParser
                 }
             }
         }
-        public Component FindParent(int currentLevel, List<Component> workingList)
+        private Component FindParent(int currentLevel, List<Component> workingList)
         {
+            // work through the list in reverse to find the first component with a "Nested Level" one less than the target
+            // because the way the list is ordered, the first component found should be the parent.
             for (var i = workingList.Count - 1; i > -1; i--)
             {
                 if (workingList[i].NestedLevel == (currentLevel - 1))

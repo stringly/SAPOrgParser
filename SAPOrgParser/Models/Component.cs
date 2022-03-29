@@ -17,6 +17,7 @@ namespace SAPOrgParser.Models
         /// This will be null for the top-level component in the org.
         /// </remarks>
         public Guid? ParentComponentId { get; set; }
+        public int LineupPosition { get; set; } = 0;
 
         public List<Component> ChildComponents { get; set;}
         public List<Position> Positions { get; set;}
@@ -54,6 +55,7 @@ namespace SAPOrgParser.Models
                 // component already exists in child collection
                 throw new InvalidOperationException($"Component {toAdd.Name} is already a Child of Component {Name}.");
             }
+            toAdd.LineupPosition = ChildComponents.Count();
             toAdd.ParentComponentId = Id;
             ChildComponents.Add(toAdd);
         }
@@ -65,6 +67,7 @@ namespace SAPOrgParser.Models
                 throw new InvalidOperationException($"Component {toRemove.Name} is not a Child of Component {Name}.");
             }
             toRemove.ParentComponentId = null;
+            toRemove.LineupPosition = 0;
             ChildComponents.Remove(toRemove);
         }
         /// <summary>
